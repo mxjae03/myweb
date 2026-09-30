@@ -3,79 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BNK 부산은행</title>
+    <title>FITBOX - INTRO</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* 인트로 페이지 정중앙 배치 스타일 */
+.intro-body {
+    background-color: #111111;
+    color: #ffffff;
+    height: 100vh; /* 화면 전체 높이 사용 */
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;     /* 세로 중앙 정렬 */
+    text-align: center;      /* 내부 텍스트 가운데 정렬 */
+}
 
-        .header-container {
-            width: 100%;
-            padding: 52px 0;
-            background-color: #ffffff;
-            border-bottom: 2px solid #C8102E; /* 하단 빨간 선 */
-        }
+.intro-content h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
 
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0px 20px;
-            display: flex;
-            align-items: center;
-            
-            
-        }
-
-        
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
-            color: #5d5a5a;
-        }
-        
-        .logo span {
-            color: #d61a39;
-            margin-right: -2px;
-            font-size: 22px;
-            margin-left: 97px;
-        }
-        .logo1 {
-            
-            font-weight: bold;
-            font-size: 15px;
-            color: black;
-            /* 개인뱅킹을 왼쪽 로고와 멀리 떨어뜨리고 싶을 때 사용 */
-            margin-left: 350px; 
-        }
-
-        .logo2, .logo3 {
-            font-weight: bold;
-            font-size: 15px;
-            color: black;
-            margin-left: 40px; /* 메뉴들 사이의 간격 */
-        }
-        
-       
-    </style>
-</head>
-<body>
+.btn-enter {
+    display: inline-block;
+    padding: 12px 35px;
+    background-color: #ffffff;
+    color: #111111;
+    font-weight: bold;
+    border-radius: 4px;
+    text-decoration: none;
     
+}
 
-    <header class="header-container">
-        <div class="header-inner">
-                <div class="logo">
-                    <span>BNK</span> 부산은행
-            </div>
-            
-            <div class="logo1">개인뱅킹</div>
-            <div class="logo2">기업뱅킹</div>
-            <div class="logo3">금융상품</div>
-           
-                
-        </div>
-    </header>
-
+.btn-enter:hover {
+    background-color: #dddddd;
+}
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="intro-body">
+    <div class="intro-content">
+        <h1>FITBOX</h1>
+        <a href="test.html" class="btn-enter">SHOP 입장하기</a>
+    </div>
 </body>
 </html>
