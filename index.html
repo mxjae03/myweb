@@ -3,386 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 마음을 전하는 법</title>
-    <!-- 구글 폰트 (Pretendard 대체용 깔끔한 산세리프) -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* [CSS] 초기화 및 변수 설정 */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif, -apple-system;
+    <title>Neon Cyberpunk Project Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                        cyber: ['Orbitron', 'sans-serif']
+                    },
+                    colors: {
+                        cyberDark: '#080612',
+                        cyberCard: 'rgba(20, 15, 35, 0.75)',
+                        neonCyan: '#00f0ff',
+                        neonPink: '#ff007f',
+                        neonPurple: '#9d00ff'
+                    }
+                }
+            }
         }
-
+    </script>
+    <style>
         body {
-            background-color: #060609;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(120, 0, 255, 0.18) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(0, 242, 254, 0.15) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(255, 0, 128, 0.1) 0%, transparent 60%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #080612;
             color: #ffffff;
-            padding: 20px;
             overflow-x: hidden;
         }
 
-        /* 메인 프레임 (모바일 앱 카드 같은 비율과 입체감) */
-        .app-container {
-            background: rgba(18, 18, 26, 0.6);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 36px;
-            padding: 50px 40px;
+        /* Animated glowing background mesh */
+        .bg-mesh {
+            position: absolute;
             width: 100%;
-            max-width: 520px;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            position: relative;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(157, 0, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 127, 0.1) 0%, transparent 50%);
+            filter: blur(60px);
         }
 
-        /* 공통 섹션 전환용 클래스 */
-        .section {
-            display: none;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+        /* Glassmorphism & Neon border hover effects */
+        .neon-card {
+            background: rgba(25, 20, 45, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .section.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
+        .neon-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(0, 240, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.25), inset 0 0 15px rgba(0, 240, 255, 0.1);
         }
 
-        /* ================= 화면 1: 인트로 ================= */
-        .intro-section {
-            text-align: center;
-            padding: 20px 0;
+        .neon-card:hover .card-icon {
+            color: #00f0ff;
+            text-shadow: 0 0 10px #00f0ff;
+            transform: scale(1.1);
         }
 
-        .intro-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(255, 0, 128, 0.12);
-            border: 1px solid rgba(255, 0, 128, 0.3);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #ff2e88;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .intro-section h1 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-            line-height: 1.2;
-            background: linear-gradient(135deg, #ffffff 30%, #a2a2c2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .intro-section p {
-            font-size: 1.05rem;
-            color: #8b8ba7;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-
-        .neon-btn {
-            width: 100%;
-            padding: 18px 0;
-            background: linear-gradient(135deg, #ff007f 0%, #7928ca 50%, #00f2fe 100%);
-            background-size: 200% auto;
-            color: #ffffff;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 18px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 0, 127, 0.4);
-            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .neon-btn:hover {
-            background-position: right center;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.4);
-        }
-
-        /* ================= 화면 2: 카드 선택 및 작성 ================= */
-        .main-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .main-header h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .main-header p {
-            font-size: 0.95rem;
-            color: #8b8ba7;
-        }
-
-        /* 카드 선택 그리드 */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .card-option {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 20px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .card-option .emoji {
-            font-size: 2rem;
-            margin-bottom: 8px;
-            display: block;
-            transition: transform 0.3s;
-        }
-
-        .card-option h3 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #b4b4cc;
-        }
-
-        .card-option:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.15);
-            transform: translateY(-3px);
-        }
-
-        .card-option:hover .emoji {
-            transform: scale(1.15);
-        }
-
-        /* 선택된 카드 상태 */
-        .card-option.selected {
-            background: linear-gradient(135deg, rgba(255, 0, 127, 0.15), rgba(0, 242, 254, 0.15));
-            border-color: #ff007f;
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.25);
-        }
-
-        .card-option.selected h3 {
-            color: #ffffff;
-            font-weight: 700;
-        }
-
-        /* 메시지 작성 박스 영역 */
-        .message-box-area {
-            display: none;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .message-box-area label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #a0a0c2;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .message-box-area textarea {
-            width: 100%;
-            height: 120px;
-            background: rgba(8, 8, 12, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 16px;
-            color: #ffffff;
-            font-size: 0.95rem;
-            resize: none;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .message-box-area textarea:focus {
-            border-color: #00f2fe;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-        }
-
-        /* 전송 완료 피드백 메시지 */
-        #result-text {
-            margin-top: 15px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #00f2fe;
-            text-align: center;
-            letter-spacing: -0.2px;
-        }
-
-        /* 뒤로 가기 및 하단 내비게이션 */
-        .nav-footer {
-            margin-top: 25px;
-            text-align: center;
-        }
-
-        .back-link {
-            background: none;
-            border: none;
-            color: #6c6c8c;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: color 0.2s;
-            text-decoration: underline;
-        }
-
-        .back-link:hover {
-            color: #fff;
+        /* Scanline effect overlay */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0, 0, 0, 0.2) 50%,
+                rgba(0, 0, 0, 0.2)
+            );
+            background-size: 100% 4px;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.25;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-center items-center relative p-6">
 
-    <div class="app-container">
+    <div class="bg-mesh"></div>
+    <div class="scanlines"></div>
 
-        <!-- ================= [SECTION 1] 인트로 화면 ================= -->
-        <div id="introSection" class="section active">
-            <div class="intro-section">
-                <span class="intro-badge">✨ Special Moment</span>
-                <h1>마음을 전하는 시간</h1>
-                <p>소중한 사람에게 전하고 싶은 카드를 선택해보세요.</p>
-                <button class="neon-btn" onclick="goToMain()">카드선택하러 가기</button>
+    <header class="text-center mb-12 relative z-10">
+        
+        <h1 class="text-3xl md:text-5xl font-extrabold font-cyber tracking-wider bg-gradient-to-r from-white via-cyan-200 to-pink-400 bg-clip-text text-transparent drop-shadow-md">
+            PROJECT 
+        </h1>
+        <p class="text-gray-400 text-sm md:text-base mt-2 font-medium tracking-wide">
+            접속할 프로젝트 세션을 선택하세요.
+        </p>
+    </header>
+
+    <main class="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 px-4">
+        
+        <!-- Project Card 1: Letter (기존 Bank 위치) -> prj.html 연결 -->
+        <a href="prj.html" class="neon-card rounded-2xl p-8 flex flex-col items-center justify-center text-center group cursor-pointer relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="card-icon text-4xl mb-4 text-cyan-400 transition-all duration-300">
+                ✉️
             </div>
-        </div>
-
-        <!-- ================= [SECTION 2] 카드 선택 및 작성 화면 ================= -->
-        <div id="mainSection" class="section">
-            <div class="main-header">
-                <h2>어떤 마음을 전할까요?</h2>
-                <p>카드를 선택하면 즉시 메시지를 작성할 수 있습니다.</p>
+            <h2 class="text-xl md:text-2xl font-bold font-cyber text-white tracking-wide group-hover:text-cyan-300 transition-colors">
+                Letter
+            </h2>
+            <p class="text-gray-400 text-sm mt-2 font-normal group-hover:text-gray-200 transition-colors">
+                마음을 전하는 편지함 어플리케이션
+            </p>
+            <div class="mt-6 flex items-center text-xs font-cyber text-cyan-400 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                ACCESS SYSTEM &rarr;
             </div>
+        </a>
 
-            <!-- 카드 선택 버튼 그룹 -->
-            <div class="card-grid">
-                <div class="card-option" onclick="selectCard('감사', this)">
-                    <span class="emoji">🎁</span>
-                    <h3>감사</h3>
-                </div>
-                <div class="card-option" onclick="selectCard('사랑', this)">
-                    <span class="emoji">💖</span>
-                    <h3>사랑</h3>
-                </div>
-                <div class="card-option" onclick="selectCard('응원', this)">
-                    <span class="emoji">🔥</span>
-                    <h3>응원</h3>
-                </div>
+        <!-- Project Card 2: Story Book (기존 Dessert Shop 위치) -> page1.html 연결 -->
+        <a href="in.html" class="neon-card rounded-2xl p-8 flex flex-col items-center justify-center text-center group cursor-pointer relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="card-icon text-4xl mb-4 text-pink-400 transition-all duration-300">
+                📖
             </div>
-
-            <!-- 카드를 고르면 나타나는 메시지 작성 영역 -->
-            <div id="messageArea" class="message-box-area">
-                <label id="selectedLabel" for="userMessage">메시지 내용</label>
-                <textarea id="userMessage" placeholder="따뜻한 마음과 진심을 가득 담아 적어보세요..."></textarea>
-                <button class="neon-btn" style="margin-top: 15px; padding: 14px 0;" onclick="sendMessage()">메시지 전송하기</button>
-                <div id="result-text"></div>
+            <h2 class="text-xl md:text-2xl font-bold font-cyber text-white tracking-wide group-hover:text-pink-300 transition-colors">
+                Story Book
+            </h2>
+            <p class="text-gray-400 text-sm mt-2 font-normal group-hover:text-gray-200 transition-colors">
+                움직이는 인터랙티브 동화책
+            </p>
+            <div class="mt-6 flex items-center text-xs font-cyber text-pink-400 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                ACCESS SYSTEM &rarr;
             </div>
+        </a>
 
-            <!-- 첫 화면으로 돌아가기 -->
-            <div class="nav-footer">
-                <button class="back-link" onclick="goToIntro()">← 처음으로 돌아가기</button>
+        <!-- Project Card 3: Empty Slot (비워둔 박스) -->
+        <a href="#" class="neon-card rounded-2xl p-8 flex flex-col items-center justify-center text-center group cursor-pointer relative overflow-hidden opacity-60 hover:opacity-150">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="card-icon text-4xl mb-4 text-purple-400 transition-all duration-300">
+                📁
             </div>
-        </div>
+            <h2 class="text-xl md:text-2xl font-bold font-cyber text-white tracking-wide group-hover:text-purple-300 transition-colors">
+                Empty Slot
+            </h2>
+            <p class="text-gray-400 text-sm mt-2 font-normal group-hover:text-gray-200 transition-colors">
+                추후 업데이트될 프로젝트 공간
+            </p>
+            <div class="mt-6 flex items-center text-xs font-cyber text-purple-400 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                COMING SOON &rarr;
+            </div>
+        </a>
 
-    </div>
+        <!-- Project Card 4: Empty Slot (비워둔 박스) -->
+        <a href="#" class="neon-card rounded-2xl p-8 flex flex-col items-center justify-center text-center group cursor-pointer relative overflow-hidden opacity-60 hover:opacity-100">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="card-icon text-4xl mb-4 text-emerald-400 transition-all duration-300">
+                📁
+            </div>
+            <h2 class="text-xl md:text-2xl font-bold font-cyber text-white tracking-wide group-hover:text-emerald-300 transition-colors">
+                Empty Slot
+            </h2>
+            <p class="text-gray-400 text-sm mt-2 font-normal group-hover:text-gray-200 transition-colors">
+                추후 업데이트될 프로젝트 공간
+            </p>
+            <div class="mt-6 flex items-center text-xs font-cyber text-emerald-400 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                COMING SOON &rarr;
+            </div>
+        </a>
 
+    </main>
 
-    <!-- ======================================================= -->
-    <!-- [JAVASCRIPT] 화면 전환 및 인터랙션 제어 스크립트 영역 -->
-    <!-- ======================================================= -->
-    <script>
-        let chosenCard = "";
-
-        // 1. 인트로 -> 메인 화면 전환 함수
-        function goToMain() {
-            document.getElementById('introSection').classList.remove('active');
-            setTimeout(() => {
-                document.getElementById('mainSection').classList.add('active');
-            }, 200);
-        }
-
-        // 2. 메인 -> 인트로 화면 전환 함수
-        function goToIntro() {
-            document.getElementById('mainSection').classList.remove('active');
-            setTimeout(() => {
-                document.getElementById('introSection').classList.add('active');
-                resetForm();
-            }, 200);
-        }
-
-        // 3. 카드 선택 시 실행되는 함수
-        function selectCard(cardName, element) {
-            chosenCard = cardName;
-
-            // 모든 카드의 선택 효과 제거
-            const cards = document.querySelectorAll('.card-option');
-            cards.forEach(c => c.classList.remove('selected'));
-
-            // 클릭한 카드에만 선택 효과 부여
-            element.classList.add('selected');
-
-            // 메시지 작성 영역 보이기
-            const messageArea = document.getElementById('messageArea');
-            messageArea.style.display = 'block';
-
-            // 선택한 카드 이름에 맞춰 라벨 문구 동적 변경
-            const label = document.getElementById('selectedLabel');
-            label.textContent = `[${cardName}] 카드에 담을 내용을 작성해주세요`;
-
-            // 입력창 및 결과 초기화
-            document.getElementById('userMessage').value = "";
-            document.getElementById('result-text').textContent = "";
-        }
-
-        // 4. 메시지 전송 버튼 클릭 시 실행되는 함수
-        function sendMessage() {
-            const message = document.getElementById('userMessage').value.trim();
-            const resultDiv = document.getElementById('result-text');
-
-            if (!message) {
-                alert("전할 메시지 내용을 입력해주세요!");
-                return;
-            }
-
-            // 전송 완료 피드백 표시
-            resultDiv.textContent = `🚀 성공적으로 [${chosenCard}] 카드가 안전하게 전송되었습니다!`;
-        }
-
-        // 5. 폼 초기화 함수
-        function resetForm() {
-            chosenCard = "";
-            document.querySelectorAll('.card-option').forEach(c => c.classList.remove('selected'));
-            document.getElementById('messageArea').style.display = 'none';
-            document.getElementById('userMessage').value = "";
-            document.getElementById('result-text').textContent = "";
-        }
-    </script>
+    <footer class="mt-16 text-center text-xs text-gray-500 font-cyber tracking-widest relative z-10">
+        SECURE CONNECTION ESTABLISHED // READY
+    </footer>
 
 </body>
 </html>
